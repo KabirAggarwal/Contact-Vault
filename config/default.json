@@ -1,0 +1,5 @@
+{
+ "mongoURI" :"mongodb+srv://kabir123:kabir123@cluster0.wqz5d.mongodb.net/<dbname>?retryWrites=true&w=majority"
+    
+}
+

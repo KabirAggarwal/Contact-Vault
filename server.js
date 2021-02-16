@@ -1,5 +1,10 @@
 const express = require('express');
 const app = express();
+const connectDB = require('./config/db');
+
+//to database
+connectDB();
+
 app.get('/', (req, res) => res.json({ msg: 'Welcome to Contacts API' }));
 
 app.use('/api/users', require('./routes/users'));
