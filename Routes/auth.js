@@ -10,8 +10,8 @@ const config = require('config');
 //@route get api/auth PRIVATE
 router.get('/', auth, async (req, res) => {
   try {
-    // const user = await User.findById(req.user.id).select('-password');
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id).select('-password');
+    //const user = await User.findById(req.user.id);
     res.json(user);
   } catch (err) {
     console.log(err.message);
