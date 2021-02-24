@@ -26,7 +26,7 @@ Navbar.propTypes = {
 };
 
 Navbar.defaultProps = {
-  title: 'Retrieve Contacts',
+  title: 'Contact Vault',
   icon: 'fas fa-id-card-alt',
 };
 
