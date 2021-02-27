@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import {
   ADD_CONTACT,
   DELETE_CONTACT,
