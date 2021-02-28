@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Alerts from './components/layout/Alerts';
-
+import setAuthToken from './utils/setAuthToken';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './components/pages/Home';
 import About from './components/pages/About';
@@ -12,6 +12,9 @@ import Register from './components/auth/Register';
 import Login from './components/auth/login';
 import AlertState from './context/alert/AlertState';
 
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 const App = () => {
   return (
     <AuthState>
