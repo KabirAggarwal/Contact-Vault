@@ -7,7 +7,6 @@ const connectDB = require('./config/db');
 connectDB();
 //middleware usage
 app.use(express.json({ extended: false }));
-// app.get('/', (req, res) => res.json({ msg: 'Welcome to Contacts API' }));
 
 //Routes
 app.use('/api/users', require('./routes/users'));
