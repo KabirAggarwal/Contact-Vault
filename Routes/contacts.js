@@ -86,7 +86,9 @@ router.put('/:id', auth, async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
-//@route delete api/contacts/:id PRivate
+// @route     DELETE api/contacts/:id
+// @desc      Delete contact
+// @access    Private
 router.delete('/:id', auth, async (req, res) => {
   try {
     let contact = await Contact.findById(req.params.id);
