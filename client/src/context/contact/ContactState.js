@@ -1,8 +1,7 @@
 import React, { useReducer } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import ContactContext from './contactContext';
-import contactReducer from './Reducer';
+import contactReducer from './contactReducer';
 import {
   GET_CONTACTS,
   ADD_CONTACT,
@@ -13,17 +12,19 @@ import {
   FILTER_CONTACTS,
   CLEAR_CONTACTS,
   CLEAR_FILTER,
-  CONTACT_ERROR,
+  CONTACT_ERROR
 } from '../types';
 
-const ContactState = (props) => {
+const ContactState = props => {
   const initialState = {
     contacts: null,
     current: null,
     filtered: null,
-    error: null,
+    error: null
   };
+
   const [state, dispatch] = useReducer(contactReducer, initialState);
+
   // Get Contacts
   const getContacts = async () => {
     try {
@@ -31,21 +32,22 @@ const ContactState = (props) => {
 
       dispatch({
         type: GET_CONTACTS,
-        payload: res.data,
+        payload: res.data
       });
     } catch (err) {
       dispatch({
         type: CONTACT_ERROR,
-        payload: err.response.msg,
+        payload: err.response.msg
       });
     }
   };
-  //Add contact
-  const addContact = async (contact) => {
+
+  // Add Contact
+  const addContact = async contact => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-      },
+        'Content-Type': 'application/json'
+      }
     };
 
     try {
@@ -53,37 +55,39 @@ const ContactState = (props) => {
 
       dispatch({
         type: ADD_CONTACT,
-        payload: res.data,
+        payload: res.data
       });
     } catch (err) {
       dispatch({
         type: CONTACT_ERROR,
-        payload: err.response.msg,
+        payload: err.response.msg
       });
     }
   };
-  //Delete contact
-  const deleteContact = (id) => {
-    dispatch({ type: DELETE_CONTACT, payload: id });
+
+  // Delete Contact
+  const deleteContact = async id => {
+    try {
+      await axios.delete(`/api/contacts/${id}`);
+
+      dispatch({
+        type: DELETE_CONTACT,
+        payload: id
+      });
+    } catch (err) {
+      dispatch({
+        type: CONTACT_ERROR,
+        payload: err.response.msg
+      });
+    }
   };
-  // Clear Contacts
-  const clearContacts = () => {
-    dispatch({ type: CLEAR_CONTACTS });
-  };
-  //Set current
-  const setCurrent = (contact) => {
-    dispatch({ type: SET_CURRENT, payload: contact });
-  };
-  //Clear contact
-  const clearCurrent = () => {
-    dispatch({ type: CLEAR_CURRENT });
-  };
-  //Update contact
-  const updateContact = async (contact) => {
+
+  // Update Contact
+  const updateContact = async contact => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-      },
+        'Content-Type': 'application/json'
+      }
     };
 
     try {
@@ -95,23 +99,41 @@ const ContactState = (props) => {
 
       dispatch({
         type: UPDATE_CONTACT,
-        payload: res.data,
+        payload: res.data
       });
     } catch (err) {
       dispatch({
         type: CONTACT_ERROR,
-        payload: err.response.msg,
+        payload: err.response.msg
       });
     }
   };
-  //Filter contact
-  const filterContacts = (text) => {
+
+  // Clear Contacts
+  const clearContacts = () => {
+    dispatch({ type: CLEAR_CONTACTS });
+  };
+
+  // Set Current Contact
+  const setCurrent = contact => {
+    dispatch({ type: SET_CURRENT, payload: contact });
+  };
+
+  // Clear Current Contact
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_CURRENT });
+  };
+
+  // Filter Contacts
+  const filterContacts = text => {
     dispatch({ type: FILTER_CONTACTS, payload: text });
   };
-  //Clear contact
+
+  // Clear Filter
   const clearFilter = () => {
     dispatch({ type: CLEAR_FILTER });
   };
+
   return (
     <ContactContext.Provider
       value={{
@@ -127,11 +149,12 @@ const ContactState = (props) => {
         filterContacts,
         clearFilter,
         getContacts,
-        clearContacts,
+        clearContacts
       }}
     >
       {props.children}
     </ContactContext.Provider>
   );
 };
+
 export default ContactState;
